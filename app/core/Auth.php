@@ -1,4 +1,10 @@
 <?php
+namespace Core;
+
+use Exception;
+use Request;
+use Response;
+
 class Auth extends Middleware
 {
     public function handle(Request $request, Response $response)
