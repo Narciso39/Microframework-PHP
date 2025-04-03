@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Models\UserModel;
 use Core\Auth;
 use Request;
@@ -12,6 +13,9 @@ class AuthController
     {
         $email = $request->input('email');
         $password = $request->input('password');
+        if (!$password) {
+            return $response->status(400)->json(['error' => 'senha faltante']);
+        }
 
         $user = UserModel::findByEmail($email);
 

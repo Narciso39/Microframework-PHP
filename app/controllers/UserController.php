@@ -16,7 +16,7 @@ class UserController
 
             if (empty($users)) {
                 return $response->status(404)->json([
-                    'error' => 'No users found',
+                    'error' => 'sem usuarios no sistema',
                     'data' => []
                 ]);
             }
@@ -24,7 +24,7 @@ class UserController
             $response->json(['data' => $users]);
         } catch (\Exception $e) {
             $response->status(500)->json([
-                'error' => 'Failed to retrieve users',
+                'error' => 'falha ao retornar usuarios',
                 'details' => $e->getMessage()
             ]);
         }
@@ -37,17 +37,17 @@ class UserController
             $id = $request->getParams()['id'] ?? null;
 
             if (!$id) {
-                return $response->status(400)->json(['error' => 'User ID is required']);
+                return $response->status(400)->json(['error' => 'id de usuario faltante']);
             }
 
             if (!is_numeric($id)) {
-                return $response->status(400)->json(['error' => 'Invalid user ID']);
+                return $response->status(400)->json(['error' => 'id de usuario invalida']);
             }
 
             $user = UserModel::find($id);
 
             if (!$user) {
-                return $response->status(404)->json(['error' => 'User not found']);
+                return $response->status(404)->json(['error' => 'usuario nao existe']);
             }
 
             $response->json($user);
@@ -64,8 +64,8 @@ class UserController
     {
         $data = $request->all();
 
-        if (empty($data['name']) || empty($data['email'])) {
-            return $response->status(400)->json(['error' => 'Name and email are required']);
+        if (empty($data['name']) || empty($data['email'] ) || empty($data['password'])) {
+            return $response->status(400)->json(['error' => 'dados faltantes ou invalidos']);
         }
 
         $id = UserModel::create($data);
