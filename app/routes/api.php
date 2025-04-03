@@ -1,6 +1,7 @@
 <?php
 
 
+
 use App\Controllers\AuthController;
 use App\Controllers\UserController;
 use Core\Middlewares\SecurityMiddleware;
@@ -17,7 +18,9 @@ Router::middleware(SecurityMiddleware::class, [
 // Router::add('GET', '/user/{id}', UserController::class, 'show');
 // Router::add('POST', '/user', UserController::class, 'post');   
 Router::add('GET', '/users', UserController::class); 
+Router::add('POST', '/user', UserController::class); 
 Router::add('GET', '/user/{id}', UserController::class);
+Router::add('POST', '/auth', AuthController::class, 'authenticate');
 // Router::add('GET', '/', function (Request $request, Response $response) {
 //     $response->json([
 //         'status' => 'online',

@@ -7,7 +7,7 @@ use Response;
 
 class Auth extends Middleware
 {
-    public function handle(Request $request, Response $response)
+    public function handle(Request $request, Response $response): bool
     {
         $token = $request->input('token');
 
@@ -32,7 +32,7 @@ class Auth extends Middleware
         }
     }
 
-    private function decodeToken($token)
+    private function decodeToken($token): array
     {
         $parts = explode('.', $token);
         if (count($parts) !== 3) {
@@ -47,7 +47,7 @@ class Auth extends Middleware
         return $payload;
     }
 
-    public static function generateToken($userId)
+    public static function generateToken($userId): string
     {
         $header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);
         $payload = json_encode(['user_id' => $userId, 'exp' => time() + 3600]);
@@ -62,7 +62,7 @@ class Auth extends Middleware
 }
 
 if (!function_exists('getallheaders')) {
-    function getallheaders()
+    function getallheaders(): array
     {
         $headers = [];
         foreach ($_SERVER as $name => $value) {
